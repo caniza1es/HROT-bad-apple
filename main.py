@@ -63,8 +63,9 @@ for i in ents:
 ply = ents[0]
 r=2.5
 
+
 count = 0
-playerpos = ply.read_xyz()
+gridpos = [43.15075684,3.125,46.61097064]
 playerorientation = ply.get_orientation()
 width,height = (480,360)
 scale = 0.018
@@ -72,7 +73,7 @@ scale = 0.018
 
 frames = [read_frame_data(f"precess/out{i+1}.txt") for i in range(2191)]
 
-dt = 0
+dt = 0.096
 
 print("fucking done")
 
@@ -84,15 +85,18 @@ height*=scale
 offset_x = width/2
 offset_z = height/2"""
 
+while not keyboard.is_pressed("p"):
+    pass
+
+
 for frame in frames:
     for pixel in frame:
         pid,x,z = pixel
         x*=scale
         z*=scale
-        gridpos = playerpos#[playerpos[i]+playerorientation[i]*r for i in range(3)]
         cellpos = [gridpos[0]+x,gridpos[1],gridpos[2]+z]
         ents[pid].set_xyz(cellpos)
-        time.sleep(dt)
+    time.sleep(dt)
     count+=1
     print(count)
 
